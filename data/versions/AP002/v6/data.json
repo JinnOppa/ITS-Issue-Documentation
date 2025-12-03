@@ -1,0 +1,39 @@
+{
+  "version": 6,
+  "updated_by": "admin",
+  "updated_at": "2025-12-03T11:52:37.597380",
+  "content": [
+    {
+      "type": "text",
+      "value": "Error AP002 adalah error yang disebabkan oleh ketersediaan data yang tidak terdeteksi di Web Service pada saat proses import data dari Web ke Oracle"
+    },
+    {
+      "type": "text",
+      "value": "Tampilan error akan terlihat seperti diatas dimana terdapat log \"ERROR AP002 Silahkan Kunjungi Web Berikut untuk cara penyelesaiannya\""
+    },
+    {
+      "type": "text",
+      "value": "Cara Penyelesaiaan:"
+    },
+    {
+      "type": "text",
+      "value": "1. Pastikan Parameter Periode saat penginputan parameter sebelum menjalankan request sudah sesuai, seperti gambar dibawah"
+    },
+    {
+      "type": "text",
+      "value": "TEST BARU"
+    },
+    {
+      "type": "text",
+      "value": "2. Jika sudah sesuai, pastikan data yang ingin di import sudah di validate/FInal dari sisi Web (pastikan dengan tim project)"
+    },
+    {
+      "type": "text",
+      "value": "Jika kendala masih dialami mohon membuat complain melalui grup whatsapp ataupun help desk"
+    },
+    {
+      "type": "text",
+      "value": "TEST V6"
+    }
+  ]
+}
