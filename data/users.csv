@@ -1,0 +1,4 @@
+username,password_hash,role,created_at,created_by,is_active
+master,a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3,IT_ADMIN,2025-12-22T14:16:46,SYSTEM,True
+admin,a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3,IT_USER,2025-12-22T14:18:30,master,True
+user,a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3,USER,2025-12-22T14:18:40,master,True
