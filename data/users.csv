@@ -1,3 +1,4 @@
 username,password,role
-admin,admin,admin
-client,client,user
+admin,admin,it_admin
+ituser,ituser,it_user
+viewer,viewer,user

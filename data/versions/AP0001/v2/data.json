@@ -1,0 +1,6 @@
+{
+  "version": 2,
+  "content": "Description\n\nVendor invoice cannot be posted because the vendor is marked as inactive in the system.\n\nHow to Solve:\n\n1. Open Vendor Master Data.\n\n2. Change vendor status to Active.\n\n3. Ensure mandatory fields are completed.\n\n4. Repost the invoice.",
+  "updated_at": "2025-12-22T16:27:37.361939",
+  "updated_by": "admin"
+}

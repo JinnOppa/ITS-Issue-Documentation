@@ -1,2 +1,2 @@
-error_code,title,latest_version,created_by,created_at
-TE0001,Test Error 0001,4,admin,2025-12-16T20:59:54.439343
+error_code,error_type,error_name,error_category,latest_version,created_at,created_by
+AP0001,Account Payables,Inactive Vendor,Master Data Error,2,2025-12-22T16:26:28.883752,admin
