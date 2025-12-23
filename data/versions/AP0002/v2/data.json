@@ -1,0 +1,6 @@
+{
+  "version": 2,
+  "content": "Description\n\nInvoice amount exceeds the remaining balance of the referenced purchase order.\n\nHow to Solve:\n\n1. Review the purchase order balance.\n\n2. Correct the invoice amount or request PO amendment.\n\n3. Re-submit the invoice.",
+  "updated_at": "2025-12-23T09:45:51.388540",
+  "updated_by": "admin"
+}

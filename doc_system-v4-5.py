@@ -112,6 +112,14 @@ def save_users(users):
         for u in users.values():
             w.writerow([u["username"], u["password"], u["role"]])
 
+def format_dt(dt_str):
+    try:
+        dt = datetime.fromisoformat(dt_str)
+        return dt.strftime("%d-%m-%Y %H:%M")
+    except:
+        return dt_str
+
+
 # ======================================================
 # LOGIN
 # ======================================================
@@ -263,13 +271,99 @@ class AppMain:
         left = ttk.Frame(paned, width=350)
         paned.add(left, weight=1)
 
-        cols = ("code","name")
+        filter_bar = ttk.Frame(left)
+        filter_bar.pack(fill="x", padx=5, pady=5)
+
+        ttk.Label(filter_bar, text="Search").pack(side="left", padx=(0,5))
+
+        self.ent_search = ttk.Entry(filter_bar)
+        self.ent_search.pack(side="left", fill="x", expand=True, padx=(0,5))
+        self.ent_search.bind(
+            "<KeyRelease>",
+            lambda e: self.refresh_docs()
+        )
+
+        self.cb_filter = ttk.Combobox(
+            filter_bar,
+            values=["All"] + list(ERROR_TYPES.keys()),
+            state="readonly",
+            width=18
+        )
+        self.cb_filter.set("All")
+        self.cb_filter.pack(side="left", padx=(0,5))
+        self.cb_filter.bind(
+            "<<ComboboxSelected>>",
+            lambda e: self.refresh_docs()
+        )
+
+        ttk.Button(
+            filter_bar,
+            text="Reset",
+            command=self.reset_doc_filter
+        ).pack(side="left")
+
+
+        # search_bar = ttk.Frame(left)
+        # search_bar.pack(fill="x", padx=5, pady=5)
+
+        # ttk.Label(search_bar, text="Search").pack(anchor="w")
+        # self.ent_search = ttk.Entry(search_bar)
+        # self.ent_search.pack(fill="x")
+
+        # ttk.Label(search_bar, text="Filter Error Type").pack(anchor="w", pady=(5,0))
+        # self.cb_filter = ttk.Combobox(
+        #     search_bar,
+        #     values=["All"] + list(ERROR_TYPES.keys()),
+        #     state="readonly"
+        # )
+        # self.cb_filter.set("All")
+        # self.cb_filter.pack(fill="x")
+
+        # self.ent_search.bind("<KeyRelease>", lambda e: self.refresh_docs())
+        # self.cb_filter.bind("<<ComboboxSelected>>", lambda e: self.refresh_docs())
+
+        cols = ("code","name","category","type")
         self.tree = ttk.Treeview(left, columns=cols, show="headings")
+
         self.tree.heading("code", text="Error Code")
         self.tree.heading("name", text="Error Name")
-        self.tree.column("code", width=100)
-        self.tree.column("name", width=220)
+        self.tree.heading("category", text="Category")
+        self.tree.heading("type", text="Type")
+
+        self.tree.column("code", width=90)
+        self.tree.column("name", width=180)
+        self.tree.column("category", width=120)
+        self.tree.column("type", width=140)
+
         self.tree.pack(fill="both", expand=True)
+
+        # search_bar = ttk.Frame(left)
+        # search_bar.pack(fill="x", padx=5, pady=5)
+
+        # ttk.Label(search_bar, text="Search").pack(anchor="w")
+        # self.ent_search = ttk.Entry(search_bar)
+        # self.ent_search.pack(fill="x")
+
+        # ttk.Label(search_bar, text="Filter Error Type").pack(anchor="w", pady=(5,0))
+        # self.cb_filter = ttk.Combobox(
+        #     search_bar,
+        #     values=["All"] + list(ERROR_TYPES.keys()),
+        #     state="readonly"
+        # )
+        # self.cb_filter.set("All")
+        # self.cb_filter.pack(fill="x")
+
+        # self.ent_search.bind("<KeyRelease>", lambda e: self.refresh_docs())
+        # self.cb_filter.bind("<<ComboboxSelected>>", lambda e: self.refresh_docs())
+
+
+        # cols = ("code","name")
+        # self.tree = ttk.Treeview(left, columns=cols, show="headings")
+        # self.tree.heading("code", text="Error Code")
+        # self.tree.heading("name", text="Error Name")
+        # self.tree.column("code", width=100)
+        # self.tree.column("name", width=220)
+        # self.tree.pack(fill="both", expand=True)
 
         self.tree.bind("<<TreeviewSelect>>", self.on_doc_select)
 
@@ -309,6 +403,13 @@ class AppMain:
 
         # --- Content ---
         self.txt = ScrolledText(right)
+        # Make content read-only for 'user' role
+        if self.role == "user":
+            self.txt.configure(background="#f5f5f5")
+            self.txt.bind("<Key>", lambda e: "break")
+            self.txt.bind("<<Paste>>", lambda e: "break")
+            self.txt.bind("<<Cut>>", lambda e: "break")
+
         self.txt.pack(fill="both", expand=True, padx=5, pady=5)
 
         # --- Action Bar ---
@@ -353,7 +454,11 @@ class AppMain:
         self.lbl_code.config(text=f"Error Code: {doc['error_code']}")
         self.lbl_type.config(text=f"Type: {doc['error_type']}")
         self.lbl_cat.config(text=f"Category: {doc['error_category']}")
-        self.lbl_created.config(text=f"Created: {doc['created_at']}")
+        # self.lbl_created.config(text=f"Created: {doc['created_at']}")
+        self.lbl_created.config(
+            text=f"Created: {format_dt(doc['created_at'])}"
+        )
+
 
         base = os.path.join(VERSIONS_DIR, self.current_code)
         versions = sorted([d for d in os.listdir(base) if d.startswith("v")])
@@ -403,9 +508,39 @@ class AppMain:
         self.docs = load_docs()
         self.tree.delete(*self.tree.get_children())
 
+        keyword = self.ent_search.get().lower() if hasattr(self, "ent_search") else ""
+        ftype = self.cb_filter.get() if hasattr(self, "cb_filter") else "All"
+
         for d in self.docs.values():
-            self.tree.insert("", "end", iid=d["error_code"],
-                values=(d["error_code"], d["error_name"]))
+            # search condition
+            if keyword:
+                if keyword not in d["error_code"].lower() \
+                and keyword not in d["error_name"].lower():
+                    continue
+
+            # filter condition
+            if ftype != "All" and d["error_type"] != ftype:
+                continue
+
+            self.tree.insert(
+                "",
+                "end",
+                iid=d["error_code"],
+                values=(
+                    d["error_code"],
+                    d["error_name"],
+                    d["error_category"],
+                    d["error_type"]
+                )
+            )
+
+    # def refresh_docs(self):
+    #     self.docs = load_docs()
+    #     self.tree.delete(*self.tree.get_children())
+
+    #     for d in self.docs.values():
+    #         self.tree.insert("", "end", iid=d["error_code"],
+    #             values=(d["error_code"], d["error_name"]))
 
     def select_doc(self, e):
         sel = self.lst.curselection()
@@ -438,7 +573,10 @@ class AppMain:
         with open(path, "r", encoding="utf-8") as f:
             data = json.load(f)
 
-        self.lbl_updated.config(text=f"Updated: {data['updated_at']}")
+        # self.lbl_updated.config(text=f"Updated: {data['updated_at']}")
+        self.lbl_updated.config(
+            text=f"Updated: {format_dt(data['updated_at'])}"
+        )
         self.txt.delete("1.0","end")
         self.txt.insert("end", data["content"])
 
@@ -689,7 +827,7 @@ class AppMain:
         if self.ent_pass.get():
             users[username]["password"] = self.ent_pass.get()
 
-        self.save_users(users)
+        save_users(users)
         messagebox.showinfo("Saved","User updated")
         self.refresh_users()
 
@@ -720,6 +858,11 @@ class AppMain:
     def load_users():
         with open(USERS_CSV, newline="", encoding="utf-8") as f:
             return {r["username"]: r for r in csv.DictReader(f)}
+
+    def reset_doc_filter(self):
+        self.ent_search.delete(0, "end")
+        self.cb_filter.set("All")
+        self.refresh_docs()
 
     # def save_users(users):
     #     with open(USERS_CSV,"w",newline="",encoding="utf-8") as f:

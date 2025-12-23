@@ -1,0 +1,6 @@
+{
+  "version": 2,
+  "content": "Description\n\nCustomer invoice cannot be posted because the customer\u2019s credit limit has been exceeded.\n\nHow to Solve:\n\n1. Review customer outstanding balance.\n\n2. Apply pending payments if available.\n\n3. Request credit limit approval.",
+  "updated_at": "2025-12-23T13:36:23.228181",
+  "updated_by": "master"
+}

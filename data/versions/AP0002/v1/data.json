@@ -1,0 +1,6 @@
+{
+  "version": 1,
+  "content": "Description\n\nInvoice amount exceeds the remaining balance of the referenced purchase order.\n\nHow to Solve\n\nReview the purchase order balance.\n\nCorrect the invoice amount or request PO amendment.\n\nRe-submit the invoice.",
+  "updated_at": "2025-12-23T09:45:29.140844",
+  "updated_by": "admin"
+}

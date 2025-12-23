@@ -2,3 +2,6 @@ username,password,role
 admin,admin,it_admin
 ituser,ituser,it_user
 viewer,viewer,user
+master,123,it_admin
+master2,123,it_user
+user,1234,user
