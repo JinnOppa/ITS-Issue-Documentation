@@ -1,0 +1,9 @@
+{
+  "version": 4,
+  "content": "sentence 1.1\nsentence 1.2\n\nsentence 2.1\n\n{img_0}",
+  "image_path": {
+    "img_0": "data\\images\\FA0001\\v2\\img_0.png"
+  },
+  "updated_at": "2026-04-29T17:14:24.134028",
+  "updated_by": "admin"
+}

@@ -1,4 +1,5 @@
 error_code,error_type,error_name,error_category,latest_version,created_at,created_by
-AP0001,Account Payables,Inactive Vendor,Master Data Error,2,2025-12-22T16:26:28.883752,admin
-AP0002,Account Payables,Invoice Exceeds PO Balance,Transaction Validation Error,2,2025-12-23T09:45:29.137526,admin
-AR0001,Account Receivables,Credit Limit Exceeded,Credit Control Error,2,2025-12-23T09:46:18.289844,admin
+AP0001,Account Payables,TEST AP001,Test Category AP,9,2026-04-29T16:29:06.872918,admin
+AP0002,Account Payables,TEST AP0002,Test Category AP,4,2026-04-29T17:08:49.337371,admin
+FA0001,Fixed Asset,TEST FA0001,Test Category FA,6,2026-04-29T17:13:46.149395,admin
+FA0002,Fixed Asset,TEST FA0002,Test Category FA,3,2026-04-29T17:21:33.285844,admin
