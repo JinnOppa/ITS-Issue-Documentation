@@ -1,0 +1,4 @@
+username,password,role
+admin,admin,it_admin
+ituser,ituser,it_user
+viewer,viewer,user
