@@ -2,4 +2,4 @@ error_code,error_type,error_name,error_category,latest_version,created_at,create
 AP0001,Account Payables,TEST AP001,Test Category AP,9,2026-04-29T16:29:06.872918,admin
 AP0002,Account Payables,TEST AP0002,Test Category AP,4,2026-04-29T17:08:49.337371,admin
 FA0001,Fixed Asset,TEST FA0001,Test Category FA,6,2026-04-29T17:13:46.149395,admin
-FA0002,Fixed Asset,TEST FA0002,Test Category FA,3,2026-04-29T17:21:33.285844,admin
+FA0002,Fixed Asset,TEST FA0002,Test Category FA,5,2026-04-29T17:21:33.285844,admin
